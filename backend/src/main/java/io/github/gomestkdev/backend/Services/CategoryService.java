@@ -2,6 +2,9 @@ package io.github.gomestkdev.backend.Services;
 
 import io.github.gomestkdev.backend.Services.interfaces.CategoryServiceImpl;
 import io.github.gomestkdev.backend.models.CategoryModel;
+import io.github.gomestkdev.backend.repositories.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -13,42 +16,38 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 public class CategoryService implements CategoryServiceImpl {
-    private List<CategoryModel> categories = new ArrayList<>();
-    private Long nextId = 1L;
+    @Autowired
+    private CategoryRepository repository;
 
     @Override
     public List<CategoryModel> getAllCategory() {
-        return categories;
+        return repository.findAll();
     }
 
     @Override
     public void createCategory(CategoryModel category) {
-        category.setId(nextId++);
-        categories.add(category);
+        repository.save(category);
     }
 
     @Override
     public CategoryModel updateCategory(Long id, CategoryModel category) {
-        Optional<CategoryModel> categoryFound = categories.stream()
-                .filter(c -> c.getId().equals(id)).
-                findFirst();
+        Optional<CategoryModel> isCategory = repository.findById(id);
 
-        if (categoryFound.isPresent()) {
-            CategoryModel existingCategory = categoryFound.get();
-            existingCategory.setName(category.getName());
-            return existingCategory;
-        } else {
-            throw new ResponseStatusException(NOT_FOUND, "Category not found!");
-        }
+        CategoryModel categoryFound = isCategory.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Resource not found!"));
+        category.setId(id);
+
+        categoryFound = repository.save(category);
+
+        return categoryFound;
     }
 
     @Override
     public String deleteCategory(Long id) {
-        CategoryModel category = categories.stream()
-                .filter(c -> c.getId().equals(id)).
-                findFirst()
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
-        categories.remove(category);
+        Optional<CategoryModel> isCategory = repository.findById(id);
+
+        CategoryModel categoryFound = isCategory.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Resource not found!"));
+
+        repository.delete(categoryFound);
 
         return "Category with id: " + id + " deleted successfully!";
     }

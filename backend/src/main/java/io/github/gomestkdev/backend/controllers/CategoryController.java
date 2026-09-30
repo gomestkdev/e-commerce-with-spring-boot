@@ -2,12 +2,12 @@ package io.github.gomestkdev.backend.controllers;
 
 import io.github.gomestkdev.backend.Services.CategoryService;
 import io.github.gomestkdev.backend.models.CategoryModel;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,7 +30,7 @@ public class CategoryController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> createCategory(@RequestBody CategoryModel category) throws Throwable {
+    public ResponseEntity<String> createCategory(@Valid @RequestBody CategoryModel category) throws Throwable {
         try {
             categoryService.createCategory(category);
             return new ResponseEntity<>("Category added with successfully", HttpStatus.CREATED);
