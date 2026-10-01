@@ -19,7 +19,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<List<CategoryModel>> getAllCategories() throws Throwable {
         try {
             List<CategoryModel> categories = categoryService.getAllCategory();
@@ -41,7 +41,7 @@ public class CategoryController {
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCategory(
-            @PathVariable Long id, @RequestBody CategoryModel category
+            @PathVariable Long id, @Valid @RequestBody CategoryModel category
     ) throws Throwable {
         try {
             CategoryModel status = categoryService.updateCategory(id, category);
