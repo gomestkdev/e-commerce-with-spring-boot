@@ -1,61 +1,69 @@
 package io.github.gomestkdev.backend.controllers;
 
 import io.github.gomestkdev.backend.Services.CategoryService;
-import io.github.gomestkdev.backend.models.CategoryModel;
+import io.github.gomestkdev.backend.config.AppConstants;
+import io.github.gomestkdev.backend.dtos.CategoryDTO;
+import io.github.gomestkdev.backend.payload.CategoryResponse;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.CREATED;
+
 
 @RestController
 @RequestMapping("/api/v1/category")
 public class CategoryController {
-    private final CategoryService categoryService;
+    private final CategoryService service;
 
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
+    public CategoryController(CategoryService service) {
+        this.service = service;
     }
 
     @GetMapping()
-    public ResponseEntity<List<CategoryModel>> getAllCategories() throws Throwable {
+    public ResponseEntity<CategoryResponse> getAllCategories(
+            @RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer number,
+            @RequestParam(name = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer size,
+            @RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_CATEGORIES_BY, required = false) String sortBy,
+            @RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIR, required = false) String sortOrder
+    ) throws Throwable {
         try {
-            List<CategoryModel> categories = categoryService.getAllCategory();
-            return new ResponseEntity<>(categories, HttpStatus.OK);
+            CategoryResponse categoriesResponse = service.getAllCategory(number, size, sortBy, sortOrder);
+            return new ResponseEntity<>(categoriesResponse, OK);
         } catch (ResponseStatusException e) {
             throw new Throwable(e.getReason());
         }
     }
 
     @PostMapping()
-    public ResponseEntity<String> createCategory(@Valid @RequestBody CategoryModel category) throws Throwable {
+    public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO category) throws Throwable {
         try {
-            categoryService.createCategory(category);
-            return new ResponseEntity<>("Category added with successfully", HttpStatus.CREATED);
+            CategoryDTO createdCategory = service.createCategory(category);
+            return new ResponseEntity<>(createdCategory, CREATED);
         } catch (ResponseStatusException e) {
             throw new Throwable(e.getReason());
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateCategory(
-            @PathVariable Long id, @Valid @RequestBody CategoryModel category
+    public ResponseEntity<CategoryDTO> updateCategory(
+            @PathVariable Long id, @Valid @RequestBody CategoryDTO category
     ) throws Throwable {
         try {
-            CategoryModel status = categoryService.updateCategory(id, category);
-            return ResponseEntity.status(HttpStatus.OK).body("Category with id: " + id + " updated with successfully.");
+            CategoryDTO savedCategory = service.updateCategory(id, category);
+            return ResponseEntity.status(OK).body(savedCategory);
         } catch (ResponseStatusException e) {
             throw new Throwable(e.getReason());
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCategory(@PathVariable Long id) throws Throwable {
+    public ResponseEntity<CategoryDTO> deleteCategory(@PathVariable Long id) throws Throwable {
         try {
-            String status = categoryService.deleteCategory(id);
-            return ResponseEntity.status(HttpStatus.OK).body(status);
+            CategoryDTO deletedCategory = service.deleteCategory(id);
+            return ResponseEntity.status(OK).body(deletedCategory);
         } catch (ResponseStatusException e) {
             throw new Throwable(e.getReason());
         }

@@ -1,0 +1,140 @@
+# ==========================================
+# 1. Sistema Operacional
+# ==========================================
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+$RECYCLE.BIN/
+*.log
+
+# ==========================================
+# 2. IDEs e Editores
+# ==========================================
+### STS (Spring Tool Suite) / Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+
+### VS Code & Outros ###
+.vscode/
+*.swp
+*.swo
+
+# ==========================================
+# 3. Java / Spring Boot
+# ==========================================
+HELP.md
+
+# Build folders
+target/
+build/
+
+# Exceções (Permite pastas chamadas target/build se estiverem dentro do código fonte)
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Maven / Gradle wrappers
+.mvn/wrapper/maven-wrapper.jar
+.gradle/
+
+# Pacotes e binários compilados
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Arquivos de propriedades locais do Spring (Evita vazar credenciais)
+application-local.yml
+application-local.properties
+application-secret.yml
+application-secret.properties
+
+# ==========================================
+# 4. Node.js / React.js / Frontend
+# ==========================================
+# Dependências
+node_modules/
+.pnp
+.pnp.js
+
+# Logs de gerenciadores de pacote
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Builds do Frontend
+dist/
+coverage/
+
+# ==========================================
+# 5. Next.js & Deploy (Vercel)
+# ==========================================
+.next/
+out/
+.vercel/
+
+# ==========================================
+# 6. Variáveis de Ambiente e Segurança
+# ==========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+
+# ==========================================
+# 7. Docker
+# ==========================================
+# Ignora configurações locais que variam por máquina
+docker-compose.override.yml
+.env.docker
+
+# Ignora pastas de volumes locais (ex: se você subir um Postgres local no Docker)
+/postgres-data/
+/pgdata/
+/db-data/
+/data/
+.docker/
+
+# ==========================================
+# 8. AWS & Nuvem
+# ==========================================
+# Proteção contra vazamento de credenciais locais da AWS
+.aws/
+credentials.json
+
+# AWS CDK (Cloud Development Kit)
+cdk.out/
+.ccdk/
+
+# AWS SAM (Serverless Application Model)
+.aws-sam/
+
+# Serverless Framework
+.serverless/

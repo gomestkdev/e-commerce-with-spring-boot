@@ -1,12 +1,13 @@
 package io.github.gomestkdev.backend.Services.interfaces;
 
-import io.github.gomestkdev.backend.models.CategoryModel;
-
-import java.util.List;
+import io.github.gomestkdev.backend.dtos.CategoryDTO;
+import io.github.gomestkdev.backend.payload.CategoryResponse;
 
 public interface CategoryServiceImpl {
-    List<CategoryModel> getAllCategory();
-    void createCategory(CategoryModel category);
-    CategoryModel updateCategory(Long id, CategoryModel category);
-    String deleteCategory(Long id);
+    CategoryResponse getAllCategory(
+            Integer pageNumber, Integer pageSize, String sortBy, String sortOrder
+    );
+    CategoryDTO createCategory(CategoryDTO category);
+    CategoryDTO updateCategory(Long id, CategoryDTO category);
+    CategoryDTO deleteCategory(Long id);
 }

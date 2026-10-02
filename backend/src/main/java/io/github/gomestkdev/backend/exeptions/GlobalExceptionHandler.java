@@ -2,6 +2,7 @@ package io.github.gomestkdev.backend.exeptions;
 
 import io.github.gomestkdev.backend.exeptions.handler.ApiException;
 import io.github.gomestkdev.backend.exeptions.handler.ResourceNotFoundException;
+import io.github.gomestkdev.backend.payload.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,16 +33,16 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> ResourceNotFoundException(ResourceNotFoundException e) {
+    public ResponseEntity<ApiResponse> ResourceNotFoundException(ResourceNotFoundException e) {
         String message = e.getMessage();
-
-        return new ResponseEntity<>(message, NOT_FOUND);
+        ApiResponse apiResponse = new ApiResponse(message, false);
+        return new ResponseEntity<>(apiResponse, NOT_FOUND);
     }
 
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<String> ApiException(ResourceNotFoundException e) {
+    public ResponseEntity<ApiResponse> ApiException(ResourceNotFoundException e) {
         String message = e.getMessage();
-
-        return new ResponseEntity<>(message, BAD_REQUEST);
+        ApiResponse apiResponse = new ApiResponse(message, false);
+        return new ResponseEntity<>(apiResponse, BAD_REQUEST);
     }
 }
