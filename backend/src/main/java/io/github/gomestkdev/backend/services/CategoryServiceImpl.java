@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,19 +30,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse getAllCategory(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
+    @Transactional(readOnly = true)
+    public CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
         Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ?
                 Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
+
         Page<CategoryModel> categoryPage = repository.findAll(pageDetails);
 
-        List<CategoryModel> categories = categoryPage.getContent();
-
-        if (categories.isEmpty()) {
-            throw new ApiException("No category created till now.");
-        }
-
-        List<CategoryDTO> categoriesDTO = categories.stream()
+        List<CategoryDTO> categoriesDTO = categoryPage.getContent().stream()
                 .map(c -> modelMapper.map(c, CategoryDTO.class))
                 .toList();
 
@@ -57,21 +54,22 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public CategoryDTO createCategory(CategoryDTO category) {
-        CategoryModel categoryModel = modelMapper.map(category, CategoryModel.class);
+        Optional<CategoryModel> existingCategory = repository.findByName(category.getName());
 
-        Optional<CategoryModel> isCategory = repository.findByName(categoryModel.getName());
-
-        if (isCategory.isPresent()) {
-            throw new ApiException("Category with name: " + categoryModel.getName() + " already exist.");
+        if (existingCategory.isPresent()) {
+            throw new ApiException("Category with name: " + category.getName() + " already exists.");
         }
 
+        CategoryModel categoryModel = modelMapper.map(category, CategoryModel.class);
         CategoryModel savedCategory = repository.save(categoryModel);
 
         return modelMapper.map(savedCategory, CategoryDTO.class);
     }
 
     @Override
+    @Transactional
     public CategoryDTO updateCategory(Long id, CategoryDTO category) {
         CategoryModel savedCategory = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));
@@ -83,12 +81,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public CategoryDTO deleteCategory(Long id) {
         CategoryModel category = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));
 
         repository.delete(category);
-
         return modelMapper.map(category, CategoryDTO.class);
     }
 }
