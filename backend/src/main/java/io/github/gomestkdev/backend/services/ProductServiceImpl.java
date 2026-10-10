@@ -1,10 +1,10 @@
-package io.github.gomestkdev.backend.Services;
+package io.github.gomestkdev.backend.services;
 
-import io.github.gomestkdev.backend.Services.interfaces.FileService;
-import io.github.gomestkdev.backend.Services.interfaces.ProductService;
+import io.github.gomestkdev.backend.services.interfaces.FileService;
+import io.github.gomestkdev.backend.services.interfaces.ProductService;
 import io.github.gomestkdev.backend.dtos.ProductDTO;
-import io.github.gomestkdev.backend.exeptions.handler.ApiException;
-import io.github.gomestkdev.backend.exeptions.handler.ResourceNotFoundException;
+import io.github.gomestkdev.backend.exceptions.handler.ApiException;
+import io.github.gomestkdev.backend.exceptions.handler.ResourceNotFoundException;
 import io.github.gomestkdev.backend.models.CategoryModel;
 import io.github.gomestkdev.backend.models.ProductModel;
 import io.github.gomestkdev.backend.payload.ProductResponse;

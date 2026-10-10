@@ -1,4 +1,4 @@
-package io.github.gomestkdev.backend.exeptions.handler;
+package io.github.gomestkdev.backend.exceptions.handler;
 
 public class ResourceNotFoundException extends RuntimeException {
     String resourceName;

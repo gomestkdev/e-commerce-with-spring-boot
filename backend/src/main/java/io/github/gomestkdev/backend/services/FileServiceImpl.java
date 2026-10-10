@@ -1,6 +1,6 @@
-package io.github.gomestkdev.backend.Services;
+package io.github.gomestkdev.backend.services;
 
-import io.github.gomestkdev.backend.Services.interfaces.FileService;
+import io.github.gomestkdev.backend.services.interfaces.FileService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

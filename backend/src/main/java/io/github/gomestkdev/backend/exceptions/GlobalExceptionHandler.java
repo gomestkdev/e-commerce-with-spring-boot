@@ -1,7 +1,7 @@
-package io.github.gomestkdev.backend.exeptions;
+package io.github.gomestkdev.backend.exceptions;
 
-import io.github.gomestkdev.backend.exeptions.handler.ApiException;
-import io.github.gomestkdev.backend.exeptions.handler.ResourceNotFoundException;
+import io.github.gomestkdev.backend.exceptions.handler.ApiException;
+import io.github.gomestkdev.backend.exceptions.handler.ResourceNotFoundException;
 import io.github.gomestkdev.backend.payload.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

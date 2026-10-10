@@ -1,4 +1,4 @@
-package io.github.gomestkdev.backend.Services.interfaces;
+package io.github.gomestkdev.backend.services.interfaces;
 
 import io.github.gomestkdev.backend.dtos.CategoryDTO;
 import io.github.gomestkdev.backend.payload.CategoryResponse;

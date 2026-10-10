@@ -1,6 +1,6 @@
 package io.github.gomestkdev.backend.controllers;
 
-import io.github.gomestkdev.backend.Services.CategoryServiceImpl;
+import io.github.gomestkdev.backend.services.CategoryServiceImpl;
 import io.github.gomestkdev.backend.config.AppConstants;
 import io.github.gomestkdev.backend.dtos.CategoryDTO;
 import io.github.gomestkdev.backend.payload.CategoryResponse;

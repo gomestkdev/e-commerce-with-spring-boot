@@ -1,4 +1,4 @@
-package io.github.gomestkdev.backend.exeptions.handler;
+package io.github.gomestkdev.backend.exceptions.handler;
 
 public class ApiException extends RuntimeException {
     private static final long serialVersionUID = 1L;

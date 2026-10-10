@@ -1,12 +1,10 @@
 package io.github.gomestkdev.backend.controllers;
 
-import io.github.gomestkdev.backend.Services.ProductServiceImpl;
+import io.github.gomestkdev.backend.services.ProductServiceImpl;
 import io.github.gomestkdev.backend.config.AppConstants;
 import io.github.gomestkdev.backend.dtos.ProductDTO;
-import io.github.gomestkdev.backend.models.ProductModel;
 import io.github.gomestkdev.backend.payload.ProductResponse;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

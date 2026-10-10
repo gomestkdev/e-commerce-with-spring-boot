@@ -1,10 +1,10 @@
-package io.github.gomestkdev.backend.Services;
+package io.github.gomestkdev.backend.services;
 
-import io.github.gomestkdev.backend.Services.interfaces.CategoryService;
+import io.github.gomestkdev.backend.services.interfaces.CategoryService;
 import io.github.gomestkdev.backend.dtos.CategoryDTO;
 import io.github.gomestkdev.backend.payload.CategoryResponse;
-import io.github.gomestkdev.backend.exeptions.handler.ApiException;
-import io.github.gomestkdev.backend.exeptions.handler.ResourceNotFoundException;
+import io.github.gomestkdev.backend.exceptions.handler.ApiException;
+import io.github.gomestkdev.backend.exceptions.handler.ResourceNotFoundException;
 import io.github.gomestkdev.backend.models.CategoryModel;
 import io.github.gomestkdev.backend.repositories.CategoryRepository;
 import org.modelmapper.ModelMapper;
