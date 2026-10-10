@@ -1,12 +1,12 @@
 package io.github.gomestkdev.backend.dtos;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 public class CategoryDTO {
     private Long id;
     private String name;

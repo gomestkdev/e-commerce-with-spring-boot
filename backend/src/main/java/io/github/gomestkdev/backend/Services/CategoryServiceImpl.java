@@ -1,6 +1,6 @@
 package io.github.gomestkdev.backend.Services;
 
-import io.github.gomestkdev.backend.Services.interfaces.CategoryServiceImpl;
+import io.github.gomestkdev.backend.Services.interfaces.CategoryService;
 import io.github.gomestkdev.backend.dtos.CategoryDTO;
 import io.github.gomestkdev.backend.payload.CategoryResponse;
 import io.github.gomestkdev.backend.exeptions.handler.ApiException;
@@ -8,7 +8,6 @@ import io.github.gomestkdev.backend.exeptions.handler.ResourceNotFoundException;
 import io.github.gomestkdev.backend.models.CategoryModel;
 import io.github.gomestkdev.backend.repositories.CategoryRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,14 +15,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class CategoryService implements CategoryServiceImpl {
-    @Autowired
-    private CategoryRepository repository;
+public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final CategoryRepository repository;
+    private final ModelMapper modelMapper;
+
+    public CategoryServiceImpl(CategoryRepository repository, ModelMapper modelMapper) {
+        this.repository = repository;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public CategoryResponse getAllCategory(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
@@ -57,9 +60,9 @@ public class CategoryService implements CategoryServiceImpl {
     public CategoryDTO createCategory(CategoryDTO category) {
         CategoryModel categoryModel = modelMapper.map(category, CategoryModel.class);
 
-        CategoryModel isCategory = repository.findByName(categoryModel.getName());
+        Optional<CategoryModel> isCategory = repository.findByName(categoryModel.getName());
 
-        if (isCategory != null) {
+        if (isCategory.isPresent()) {
             throw new ApiException("Category with name: " + categoryModel.getName() + " already exist.");
         }
 
@@ -73,11 +76,10 @@ public class CategoryService implements CategoryServiceImpl {
         CategoryModel savedCategory = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));
 
-        CategoryModel categoryModel = modelMapper.map(category, CategoryModel.class);
-        categoryModel.setId(id);
+        savedCategory.setName(category.getName());
 
-        savedCategory = repository.save(savedCategory);
-        return modelMapper.map(savedCategory, CategoryDTO.class);
+        CategoryModel updatedCategory = repository.save(savedCategory);
+        return modelMapper.map(updatedCategory, CategoryDTO.class);
     }
 
     @Override
