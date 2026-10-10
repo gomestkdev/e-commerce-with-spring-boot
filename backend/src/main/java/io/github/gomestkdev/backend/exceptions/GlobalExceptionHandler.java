@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -15,32 +15,32 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler
-    public ResponseEntity<Map<String, String>> ArgumentNotValidException(MethodArgumentNotValidException e) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         Map<String, String> response = new HashMap<>();
 
         e.getBindingResult().getAllErrors().forEach(err -> {
-            String fieldName = ((FieldError)err).getField();
+            String fieldName = ((FieldError) err).getField();
             String message = err.getDefaultMessage();
 
             response.put(fieldName, message);
         });
 
-        return new ResponseEntity<Map<String, String>>(response, BAD_REQUEST);
+        return new ResponseEntity<>(response, BAD_REQUEST);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiResponse> ResourceNotFoundException(ResourceNotFoundException e) {
+    public ResponseEntity<ApiResponse> handleResourceNotFoundException(ResourceNotFoundException e) {
         String message = e.getMessage();
         ApiResponse apiResponse = new ApiResponse(message, false);
         return new ResponseEntity<>(apiResponse, NOT_FOUND);
     }
 
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<ApiResponse> ApiException(ResourceNotFoundException e) {
+    public ResponseEntity<ApiResponse> handleApiException(ApiException e) {
         String message = e.getMessage();
         ApiResponse apiResponse = new ApiResponse(message, false);
         return new ResponseEntity<>(apiResponse, BAD_REQUEST);
