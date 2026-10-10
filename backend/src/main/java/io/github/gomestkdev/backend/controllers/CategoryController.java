@@ -1,7 +1,6 @@
 package io.github.gomestkdev.backend.controllers;
 
 import io.github.gomestkdev.backend.Services.CategoryServiceImpl;
-import io.github.gomestkdev.backend.Services.interfaces.CategoryService;
 import io.github.gomestkdev.backend.config.AppConstants;
 import io.github.gomestkdev.backend.dtos.CategoryDTO;
 import io.github.gomestkdev.backend.payload.CategoryResponse;
@@ -16,9 +15,9 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequestMapping("/api/v1/categories")
 public class CategoryController {
 
-    private final CategoryService service;
+    private final CategoryServiceImpl service;
 
-    public CategoryController(CategoryService service) {
+    public CategoryController(CategoryServiceImpl service) {
         this.service = service;
     }
 
