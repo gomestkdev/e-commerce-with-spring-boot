@@ -18,18 +18,26 @@ public class ProductModel {
 
     @NotBlank
     @Size(min = 3, message = "Product name must be at least 3 characters")
+    @Column(nullable = false)
     private String name;
 
     @NotBlank
     @Size(min = 6, message = "Product description must be at least 6 characters")
+    @Column(nullable = false)
     private String description;
+
     private String image;
+
+    @Column(nullable = false)
     private Integer quantity;
+
+    @Column(nullable = false)
     private Double price;
+
     private Double discount;
     private Double specialPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     private CategoryModel category;
 }
