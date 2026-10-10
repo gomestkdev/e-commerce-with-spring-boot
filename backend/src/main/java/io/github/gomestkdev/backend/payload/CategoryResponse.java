@@ -1,15 +1,15 @@
 package io.github.gomestkdev.backend.payload;
 
 import io.github.gomestkdev.backend.dtos.CategoryDTO;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 public class CategoryResponse {
     private List<CategoryDTO> content;
     private Integer pageNumber;
