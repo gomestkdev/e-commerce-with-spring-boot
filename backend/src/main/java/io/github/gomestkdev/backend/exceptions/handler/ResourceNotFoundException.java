@@ -1,13 +1,12 @@
 package io.github.gomestkdev.backend.exceptions.handler;
 
 public class ResourceNotFoundException extends RuntimeException {
-    String resourceName;
-    String field;
-    String fieldName;
-    Long fieldId;
+    private String resourceName;
+    private String field;
+    private String fieldName;
+    private Long fieldId;
 
     public ResourceNotFoundException() {
-
     }
 
     public ResourceNotFoundException(String resourceName, String field, String fieldName) {
